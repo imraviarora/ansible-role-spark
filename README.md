@@ -19,25 +19,24 @@ sudo git clone git@github.com:imraviarora/ansible-role-spark.git /etc/ansible/ro
 
 ```
 [all]
-#ansible_user=centos
-#ansible_ssh_private_key_file=~private-key.pem
 mn1
 dn1
 dn2
+
 [masters]
 mn1
 
-[zookeepers:children]
+[zookeepers]
 mn1
 
-[spark-masters:children]
+[spark-masters]
 mn1
 
 [slaves]
 dn1
 dn2
 
-[spark-workers:children]
+[spark-workers]
 dn1
 dn2
 ```
@@ -48,14 +47,13 @@ dn2
 - name: spark master setup
   hosts: all
   roles:
-    #- role: geerlingguy.java
     - role: ansible-spark
 ```
 
 4) run the playbook
 
 ```
-ansible-playbook [-i <path>/<to>/<hosts/inventory>] ~/spark.yaml
+ansible-playbook -i hosts spark.yaml
 ```
 
 5) validate cluster
