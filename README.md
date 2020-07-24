@@ -12,33 +12,34 @@ sudo ansible-galaxy install geerlingguy.java
 1) Simply clone this repo to /etc/ansible/roles
 
 ```
-sudo git clone git@github.com:slaclab/ansible-role-spark.git /etc/ansible/roles/ansible-spark
+sudo git clone git@github.com:imraviarora/ansible-role-spark.git /etc/ansible/roles/ansible-spark
 ```
 
 2) modify your hosts inventory file (either /etc/ansible/hosts or your own file somewhere to be referenced by the playbook with -i) to something like this:
 
 ```
-[all:vars]
-ansible_user=centos
-ansible_ssh_private_key_file=~private-key.pem
-
+[all]
+#ansible_user=centos
+#ansible_ssh_private_key_file=~private-key.pem
+mn1
+dn1
+dn2
 [masters]
-dhcp-os-129-163.slac.stanford.edu
+mn1
 
 [zookeepers:children]
-masters
+mn1
 
 [spark-masters:children]
-masters
+mn1
 
 [slaves]
-dhcp-os-129-155.slac.stanford.edu
-dhcp-os-129-160.slac.stanford.edu
-dhcp-os-129-161.slac.stanford.edu
-dhcp-os-129-162.slac.stanford.edu
+dn1
+dn2
 
 [spark-workers:children]
-slaves
+dn1
+dn2
 ```
 
 3) create a playbook file somewhere (eg. ~/spark.yml):
@@ -47,7 +48,7 @@ slaves
 - name: spark master setup
   hosts: all
   roles:
-    - role: geerlingguy.java
+    #- role: geerlingguy.java
     - role: ansible-spark
 ```
 
